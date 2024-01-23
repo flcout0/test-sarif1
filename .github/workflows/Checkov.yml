@@ -16,10 +16,9 @@ jobs:
   # This workflow contains a single job called "scan"
   scan:
     permissions:
-      id-token: write # for actions/checkout to fetch code
+      contents: read # for actions/checkout to fetch code
       security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
       actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
-      
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -46,3 +45,6 @@ jobs:
         if: success() || failure()
         with:
           sarif_file: results.sarif
+
+      - name: Introduce deliberate security group issue
+        run: echo "security_group_rule = {'type': 'ingress', 'cidr_blocks': ['0.0.0.0/0']}"    
