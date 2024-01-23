@@ -47,4 +47,8 @@ jobs:
           sarif_file: results.sarif
 
       - name: Introduce deliberate security group issue
-        run: echo "security_group_rule = {\"type\": \"ingress\", \"cidr_blocks\": [\"0.0.0.0/0\"]}"    
+        run: |
+            curl -X POST \
+            -H "Content-Type: application/json" \
+            -d '{"type": "ingress", "cidr_blocks": ["0.0.0.0/0"]}' \
+            https://your-ec2-endpoint/api/path
